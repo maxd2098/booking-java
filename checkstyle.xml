@@ -100,7 +100,6 @@
             <property name="tokens" value="COMMA, LPAREN"/>
             <property name="option" value="eol"/>
         </module>
-
         <!--need take time-->
         <!--<module name="OperatorWrap"/>-->
         <!--<module name="ParenPad"/>-->

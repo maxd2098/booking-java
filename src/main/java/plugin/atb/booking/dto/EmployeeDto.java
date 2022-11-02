@@ -6,7 +6,6 @@ public class EmployeeDto {
     private String password;
 
     public EmployeeDto() {
-
     }
 
     public String getLogin() {

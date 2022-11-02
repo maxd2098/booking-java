@@ -10,7 +10,6 @@ public class QueueReservationDto {
     private String login;
 
     public QueueReservationDto () {
-
     }
 
     public LocalDateTime getTimeBegin() {

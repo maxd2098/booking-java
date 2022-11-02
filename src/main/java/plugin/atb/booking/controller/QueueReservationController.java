@@ -5,7 +5,6 @@ import plugin.atb.booking.model.QueueReservation;
 import plugin.atb.booking.service.QueueReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

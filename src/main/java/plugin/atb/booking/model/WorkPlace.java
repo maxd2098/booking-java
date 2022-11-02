@@ -6,7 +6,6 @@ public class WorkPlace {
     private int numSeats;
 
     public WorkPlace () {
-
     }
 
     public WorkPlace(int idWorkPlace, boolean type, int numSeats) {

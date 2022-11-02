@@ -1,8 +1,22 @@
 package plugin.atb.booking.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Setter
+@Getter
+@ToString
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_employee", nullable = false)
+    private Long id_employee;
     private String name;
     private String login;
     private String password;
@@ -17,14 +31,14 @@ public class Employee {
         this.password = password;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Employee{" +
                 "name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

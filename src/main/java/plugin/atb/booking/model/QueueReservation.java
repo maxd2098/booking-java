@@ -9,7 +9,6 @@ public class QueueReservation {
     private String login;
 
     public QueueReservation () {
-
     }
 
     public QueueReservation(LocalDateTime timeBegin, LocalDateTime timeEnd, int idPlace, String login) {

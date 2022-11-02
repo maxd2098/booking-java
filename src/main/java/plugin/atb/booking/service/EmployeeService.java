@@ -1,29 +1,32 @@
 package plugin.atb.booking.service;
 
+import lombok.RequiredArgsConstructor;
 import plugin.atb.booking.dto.EmployeeDto;
 import plugin.atb.booking.model.Employee;
 import org.springframework.stereotype.Service;
+import plugin.atb.booking.repository.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service //controller
+@RequiredArgsConstructor
 public class EmployeeService {
     public List<Employee> dataBase = new ArrayList<>();
+    private final EmployeeRepository employeeRepository;
 
     public void createEmployee(EmployeeDto employeeDto) {
         String name = employeeDto.getName();
         String login = employeeDto.getLogin();
         String password = employeeDto.getPassword();
         try {
-            boolean checkLogin = dataBase.stream()
+            boolean checkLogin = employeeRepository.findAll().stream()
                     .anyMatch(e -> e.getLogin().equals(login));
             if (checkLogin) {
                 throw new Exception("Пользователь с логином " + login + " уже существует");
             }
-            Employee employee = new Employee(name, login, password);
-            dataBase.add(employee);
+            employeeRepository.save(new Employee(name, login, password));
             System.out.println("Пользователь с логином " + login + " был создан");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

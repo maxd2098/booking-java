@@ -6,7 +6,6 @@ public class WorkPlaceDto {
     private int numSeats;
 
     public WorkPlaceDto () {
-
     }
 
     public int getIdWorkPlace() {
