@@ -13,7 +13,7 @@ public class EmployeeController {
     EmployeeService employeeService;
  
     @PostMapping("/")
-    public void createEmployee(EmployeeDto employeeDto) {
+    public void createEmployee(@RequestBody EmployeeDto employeeDto) {
         employeeService.createEmployee(employeeDto);
     }
 

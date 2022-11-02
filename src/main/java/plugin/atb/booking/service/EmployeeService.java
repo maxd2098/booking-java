@@ -2,6 +2,7 @@ package plugin.atb.booking.service;
 
 import lombok.RequiredArgsConstructor;
 import plugin.atb.booking.dto.EmployeeDto;
+import plugin.atb.booking.mapper.EmployeeMapper;
 import plugin.atb.booking.model.Employee;
 import org.springframework.stereotype.Service;
 import plugin.atb.booking.repository.EmployeeRepository;
@@ -26,7 +27,8 @@ public class EmployeeService {
             if (checkLogin) {
                 throw new Exception("Пользователь с логином " + login + " уже существует");
             }
-            employeeRepository.save(new Employee(name, login, password));
+            Employee employee = EmployeeMapper.mapDtoToEmployee(employeeDto);
+            employeeRepository.save(EmployeeMapper.mapEmployeeToEmployeeEntity(employee));
             System.out.println("Пользователь с логином " + login + " был создан");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -10,12 +10,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString
-@Entity
-@Table(name = "employee")
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_employee", nullable = false)
     private Long id_employee;
     private String name;
     private String login;
@@ -31,14 +26,12 @@ public class Employee {
         this.password = password;
     }
 
-    /*@Override
-    public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }*/
+    public Employee(Long id_employee, String name, String login, String password) {
+        this.id_employee = id_employee;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {
