@@ -16,8 +16,7 @@ public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_employee", nullable = false)
-    //@Column(columnDefinition = "NUMERIC(19,0)")
-    private Long id_employee;
+    private Long idEmployee;
     private String name;
     private String login;
     private String password;
@@ -29,6 +28,17 @@ public class EmployeeEntity {
     public EmployeeEntity(String name, String login, String password) {
         this.name = name;
         this.login = login;
+        this.password = password;
+    }
+
+    public EmployeeEntity(Long idEmployee, String name, String password) {
+        this.idEmployee = idEmployee;
+        this.name = name;
+        this.password = password;
+    }
+
+    public EmployeeEntity(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 }

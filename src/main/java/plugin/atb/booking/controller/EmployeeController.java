@@ -1,7 +1,10 @@
 package plugin.atb.booking.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import plugin.atb.booking.dto.EmployeeDto;
-import plugin.atb.booking.model.Employee;
+import plugin.atb.booking.dto.EmployeeResponseDto;
+import plugin.atb.booking.dto.EmployeeUpdateDto;
 import plugin.atb.booking.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +20,19 @@ public class EmployeeController {
         employeeService.createEmployee(employeeDto);
     }
 
-    @GetMapping("/")
-    public Employee readEmployee(String login) {
-        return employeeService.readEmployee(login);
+    @GetMapping("/{login}")
+    public EmployeeResponseDto readEmployeeByLogin(@PathVariable String login) {
+        //return ResponseEntity.status(HttpStatus.OK).body(employeeService.readEmployeeByLogin(login));
+        return employeeService.readEmployeeByLogin(login);
     }
 
-    @PutMapping("/")
-    public void updateEmployee(EmployeeDto employeeDto) {
-        employeeService.updateEmployee(employeeDto);
+    @PutMapping("/{idEmployee}")
+    public void updateEmployeeById(@PathVariable Long idEmployee, @RequestBody EmployeeUpdateDto employeeUpdateDto) {
+        employeeService.updateEmployeeById(idEmployee, employeeUpdateDto);
     }
 
-    @DeleteMapping("/")
-    public void deleteEmployee(String login) {
-        employeeService.deleteEmployee(login);
+    @DeleteMapping("/{idEmployee}")
+    public void deleteEmployeeById(@PathVariable Long idEmployee) {
+        employeeService.deleteEmployeeById(idEmployee);
     }
 }

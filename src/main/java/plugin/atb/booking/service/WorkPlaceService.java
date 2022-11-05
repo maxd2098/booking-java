@@ -1,77 +1,76 @@
 package plugin.atb.booking.service;
 
+import lombok.RequiredArgsConstructor;
 import plugin.atb.booking.dto.WorkPlaceDto;
+import plugin.atb.booking.entity.WorkPlaceEntity;
+import plugin.atb.booking.mapper.WorkPlaceMapper;
 import plugin.atb.booking.model.WorkPlace;
 import org.springframework.stereotype.Service;
+import plugin.atb.booking.repository.WorkPlaceRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class WorkPlaceService {
-
-    public static List<WorkPlace> workPlace = new ArrayList<>();
+    private final WorkPlaceRepository workPlaceRepository;
 
     public void createWorkPlace(WorkPlaceDto workPlaceDto) {
-        int idWorkPlace = workPlaceDto.getIdWorkPlace();
-        boolean type = workPlaceDto.isType();
-        int numSeats = workPlaceDto.getNumSeats();
         try {
-            boolean checkLogin = workPlace.stream()
-                    .anyMatch(e -> e.getIdWorkPlace() == idWorkPlace);
-            if (checkLogin) {
-                throw new Exception("Рабочее место с id " + idWorkPlace + " уже существует");
-            }
-            WorkPlace place = new WorkPlace(idWorkPlace, type, numSeats);
-            workPlace.add(place);
-            System.out.println("Рабочее место с id " + idWorkPlace + " было создано");
+            WorkPlace workPlace = WorkPlaceMapper.mapWorkPlaceDtoToWorkPlace(workPlaceDto);
+            workPlaceRepository.save(WorkPlaceMapper.mapWorkPlaceToWorkPlaceEntity(workPlace));
+            System.out.println("Новое рабочее место было создано");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public WorkPlace readWorkPlace(int idWorkPlace) {
+    public WorkPlaceEntity readWorkPlace(Long idWorkPlace) {
         try {
-            Optional<WorkPlace> place = workPlace.stream()
-                    .filter(e -> e.getIdWorkPlace() == idWorkPlace)
-                    .findFirst();
-            if (place.isPresent()) {
-                System.out.println("Рабочее место с номером " + idWorkPlace + " было получено");
-                return place.get();
-            } else {
-                throw new Exception("Рабочее место с номером " + idWorkPlace + " не найдено");
-            }
+            WorkPlaceEntity workPlaceEntity = workPlaceRepository.findAll().stream()
+                    .filter(e -> Objects.equals(e.getIdWorkPlace(), idWorkPlace))
+                    .findFirst().orElseThrow(() -> new RuntimeException("Рабочее место с номером " + idWorkPlace
+                            + " не найдено"));
+            System.out.println("Рабочее место с номером " + idWorkPlace + " было получено");
+            return workPlaceEntity;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;
         }
     }
 
-    public void updateWorkPlace(WorkPlaceDto workPlaceDto) {
-        int idWorkPlace = workPlaceDto.getIdWorkPlace();
-        boolean type = workPlaceDto.isType();
-        int numSeats = workPlaceDto.getNumSeats();
+    public void updateWorkPlace(Long idWorkPlace, WorkPlaceDto workPlaceDto) {
         try {
-            Optional<WorkPlace> place = workPlace.stream()
-                    .filter(e -> e.getIdWorkPlace() == idWorkPlace)
-                    .findFirst();
-            if (place.isEmpty()) {
-                throw new Exception("Рабочее место с номером " + idWorkPlace + " не найдено для изменения");
+            WorkPlaceEntity workPlaceEntity = workPlaceRepository.findAll().stream()
+                    .filter(e -> Objects.equals(e.getIdWorkPlace(), idWorkPlace))
+                    .findFirst().orElseThrow(() -> new RuntimeException("Рабочее место с номером " + idWorkPlace
+                            + " не найдено для изменения"));
+            workPlaceEntity.setType(workPlaceDto.isType());
+            if (workPlaceDto.getNumSeats() >= 0) {
+                workPlaceEntity.setNumSeats(workPlaceDto.getNumSeats());
             }
-            //int indexPlace = workPlace.indexOf(place.get());
-            place.get().setType(type);
-            place.get().setNumSeats(numSeats);
-            //workPlace.set(indexPlace, place.get());
+            if (workPlaceDto.getNumLevel() >= 0) {
+                workPlaceEntity.setNumLevel(workPlaceDto.getNumLevel());
+            }
+            if (workPlaceDto.getInfo() != null) {
+                workPlaceEntity.setInfo(workPlaceDto.getInfo());
+            }
+            workPlaceRepository.save(workPlaceEntity);
             System.out.println("Рабочее место с номером " + idWorkPlace + " было отреактировано");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void deleteWorkPlace(int idWorkPlace) {
+    public void deleteWorkPlace(Long idWorkPlace) {
         try {
-            if (workPlace.removeIf(e -> e.getIdWorkPlace() == idWorkPlace)) {
+            boolean checkDeleteWorkPlace = workPlaceRepository.findAll().stream()
+                    .anyMatch(e -> Objects.equals(e.getIdWorkPlace(), idWorkPlace));
+            if (checkDeleteWorkPlace) {
+                workPlaceRepository.deleteById(idWorkPlace);
                 System.out.println("Рабочее место с номером " + idWorkPlace + " было удалено");
             } else {
                 throw new Exception("Рабочее место с номером " + idWorkPlace + " не найдено для удаления");

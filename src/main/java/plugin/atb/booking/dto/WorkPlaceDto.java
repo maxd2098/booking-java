@@ -1,34 +1,16 @@
 package plugin.atb.booking.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class WorkPlaceDto {
-    private int idWorkPlace;
     private boolean type;
     private int numSeats;
+    private int numLevel;
+    private String info;
 
     public WorkPlaceDto () {
-    }
-
-    public int getIdWorkPlace() {
-        return idWorkPlace;
-    }
-
-    public void setIdWorkPlace(int idWorkPlace) {
-        this.idWorkPlace = idWorkPlace;
-    }
-
-    public boolean isType() {
-        return type;
-    }
-
-    public void setType(boolean type) {
-        this.type = type;
-    }
-
-    public int getNumSeats() {
-        return numSeats;
-    }
-
-    public void setNumSeats(int numSeats) {
-        this.numSeats = numSeats;
     }
 }

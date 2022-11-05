@@ -1,7 +1,7 @@
 package plugin.atb.booking.controller;
 
 import plugin.atb.booking.dto.WorkPlaceDto;
-import plugin.atb.booking.model.WorkPlace;
+import plugin.atb.booking.entity.WorkPlaceEntity;
 import plugin.atb.booking.service.WorkPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,22 +14,22 @@ public class WorkPlaceController {
     WorkPlaceService workPlaceService;
 
     @PostMapping("/")
-    public void createWorkPlace(WorkPlaceDto workPlaceDto) {
+    public void createWorkPlace(@RequestBody WorkPlaceDto workPlaceDto) {
         workPlaceService.createWorkPlace(workPlaceDto);
     }
 
-    @GetMapping("/")
-    public WorkPlace readWorkPlace(int idWorkPlace) {
+    @GetMapping("/{idWorkPlace}")
+    public WorkPlaceEntity readWorkPlace(@PathVariable Long idWorkPlace) {
         return workPlaceService.readWorkPlace(idWorkPlace);
     }
 
-    @PutMapping("/")
-    public void updateWorkPlace(WorkPlaceDto workPlaceDto) {
-        workPlaceService.updateWorkPlace(workPlaceDto);
+    @PutMapping("/{idWorkPlace}")
+    public void updateWorkPlace(@PathVariable Long idWorkPlace, @RequestBody WorkPlaceDto workPlaceDto) {
+        workPlaceService.updateWorkPlace(idWorkPlace, workPlaceDto);
     }
 
-    @DeleteMapping("/")
-    public void deleteWorkPlace(int idWorkPlace) {
+    @DeleteMapping("/{idWorkPlace}")
+    public void deleteWorkPlace(@PathVariable Long idWorkPlace) {
         workPlaceService.deleteWorkPlace(idWorkPlace);
     }
 }
