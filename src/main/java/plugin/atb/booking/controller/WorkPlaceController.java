@@ -1,11 +1,10 @@
 package plugin.atb.booking.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import plugin.atb.booking.dto.WorkPlaceDto;
 import plugin.atb.booking.entity.WorkPlaceEntity;
 import plugin.atb.booking.service.WorkPlaceService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/workPlace")

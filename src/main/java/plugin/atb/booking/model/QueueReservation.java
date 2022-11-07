@@ -1,62 +1,34 @@
 package plugin.atb.booking.model;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Setter
+@Getter
+@ToString
 public class QueueReservation {
-    private LocalDateTime timeBegin;
-    private LocalDateTime timeEnd;
-    private int idPlace;
-    private String login;
+    private LocalDate date;
+    private LocalTime timeBegin;
+    private LocalTime timeEnd;
+    private boolean adminPermission;
+    private WorkPlace workPlace;
 
-    public QueueReservation () {
-    }
+    private Employee employee;
 
-    public QueueReservation(LocalDateTime timeBegin, LocalDateTime timeEnd, int idPlace, String login) {
+    public QueueReservation(LocalDate date,
+                            LocalTime timeBegin,
+                            LocalTime timeEnd,
+                            boolean admin_permission,
+                            Employee employee) {
+        this.date = date;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
-        this.idPlace = idPlace;
-        this.login = login;
-    }
-
-    public LocalDateTime getTimeBegin() {
-        return timeBegin;
-    }
-
-    public void setTimeBegin(LocalDateTime timeBegin) {
-        this.timeBegin = timeBegin;
-    }
-
-    public LocalDateTime getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(LocalDateTime timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public int getIdPlace() {
-        return idPlace;
-    }
-
-    public void setIdPlace(int idPlace) {
-        this.idPlace = idPlace;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    @Override
-    public String toString() {
-        return "QueueReservation{" +
-                "timeBegin=" + timeBegin +
-                ", timeEnd=" + timeEnd +
-                ", idPlace=" + idPlace +
-                ", login='" + login + '\'' +
-                '}';
+        this.adminPermission = admin_permission;
+        //this.idPlace = idPlace;
+        this.employee = employee;
     }
 }

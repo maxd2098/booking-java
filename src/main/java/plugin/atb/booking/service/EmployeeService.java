@@ -1,15 +1,17 @@
 package plugin.atb.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import plugin.atb.booking.dto.EmployeeDto;
 import plugin.atb.booking.dto.EmployeeResponseDto;
 import plugin.atb.booking.dto.EmployeeUpdateDto;
 import plugin.atb.booking.entity.EmployeeEntity;
 import plugin.atb.booking.mapper.EmployeeMapper;
 import plugin.atb.booking.model.Employee;
-import org.springframework.stereotype.Service;
 import plugin.atb.booking.repository.EmployeeRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service //controller
@@ -39,6 +41,22 @@ public class EmployeeService {
                     .findFirst().orElseThrow(() -> new RuntimeException("Пользователь с логином " + login + " не найден"));
             System.out.println("Пользователь с логином " + login + " был получен");
             return EmployeeMapper.mapEmployeeEntityToResponseDto(employeeEntity);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public Employee readEmployeeById(Long idEmployee) {
+        try {
+            List<Employee> employees = new ArrayList<>();
+            employeeRepository.findAll()
+                    .forEach(tt -> employees.add(EmployeeMapper.mapEmployeeEntityToEmployee(tt)));
+            Employee employee = employees.stream()
+                    .filter(e -> e.getIdEmployee().equals(idEmployee))
+                    .findFirst().orElseThrow(() -> new RuntimeException("Пользователь с id " + idEmployee + " не найден"));;
+            System.out.println("Пользователь с id " + idEmployee + " был получен");
+            return employee;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;

@@ -1,10 +1,11 @@
 package plugin.atb.booking.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import plugin.atb.booking.dto.QueueReservationDto;
 import plugin.atb.booking.model.QueueReservation;
 import plugin.atb.booking.service.QueueReservationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,15 +20,15 @@ public class QueueReservationController {
         queueReservationService.createQueueReservation(queueReservationDto);
     }
 
-    @GetMapping("/login")
-    public List<QueueReservation> readQueueReservationForEmployee(String login) throws Exception {
-        return queueReservationService.readQueueReservationForEmployee(login);
+    @GetMapping("/{idEmployee}")
+    public List<QueueReservation> readQueueReservationForEmployee(@PathVariable Long idEmployee) throws Exception {
+        return queueReservationService.readQueueReservationByEmployeeId(idEmployee);
     }
 
-    @GetMapping("/idWorkPlace")
-    public List<QueueReservation> readQueueReservationForWorkPlace(int idWorkPlace) throws Exception {
-        return queueReservationService.readQueueReservationForWorkPlace(idWorkPlace);
-    }
+//    @GetMapping("/idWorkPlace")
+//    public List<QueueReservation> readQueueReservationForWorkPlace(int idWorkPlace) throws Exception {
+//        return queueReservationService.readQueueReservationForWorkPlace(idWorkPlace);
+//    }
 
     @DeleteMapping("/")
     public void deleteQueueReservation(QueueReservationDto queueReservationDto) {

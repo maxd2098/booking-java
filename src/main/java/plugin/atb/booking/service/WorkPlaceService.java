@@ -1,17 +1,14 @@
 package plugin.atb.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import plugin.atb.booking.dto.WorkPlaceDto;
 import plugin.atb.booking.entity.WorkPlaceEntity;
 import plugin.atb.booking.mapper.WorkPlaceMapper;
 import plugin.atb.booking.model.WorkPlace;
-import org.springframework.stereotype.Service;
 import plugin.atb.booking.repository.WorkPlaceRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -23,11 +23,29 @@ public class EmployeeMapper {
         );
     }
 
+    public static Employee mapEmployeeEntityToEmployee(EmployeeEntity employeeEntity) {
+        return new Employee(
+                employeeEntity.getIdEmployee(),
+                employeeEntity.getName(),
+                employeeEntity.getLogin(),
+                employeeEntity.getPassword()
+        );
+    }
+
     public static EmployeeResponseDto mapEmployeeEntityToResponseDto(EmployeeEntity employeeEntity) {
         return new EmployeeResponseDto(
                 employeeEntity.getIdEmployee(),
                 employeeEntity.getLogin(),
                 employeeEntity.getName()
+        );
+    }
+
+    public static EmployeeEntity mapEmployeeToEmployeeEntityForQueue(Employee employee) {
+        return new EmployeeEntity(
+                employee.getIdEmployee(),
+                employee.getName(),
+                employee.getLogin(),
+                employee.getPassword()
         );
     }
 

@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 @Setter
 @Getter
+@ToString
 public class WorkPlace {
     private Long idWorkPlace;
     private boolean type;
@@ -32,14 +30,5 @@ public class WorkPlace {
         this.numSeats = numSeats;
         this.numLevel = numLevel;
         this.info = info;
-    }
-
-    @Override
-    public String toString() {
-        return "WorkPlace{" +
-                "idWorkPlace=" + idWorkPlace +
-                ", type=" + type +
-                ", numSeats=" + numSeats +
-                '}';
     }
 }

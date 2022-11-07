@@ -1,48 +1,49 @@
 package plugin.atb.booking.dto;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Setter
+@Getter
 public class QueueReservationDto {
-    private LocalDateTime timeBegin;
-    private LocalDateTime timeEnd;
-    private int idPlace;
-    private String login;
+
+    private LocalDate date;
+    private String timeBegin;
+    private String timeEnd;
+    private boolean adminPermission;
+    //private int idPlace;
+    private Long idEmployee;
 
     public QueueReservationDto () {
     }
 
-    public LocalDateTime getTimeBegin() {
-        return timeBegin;
+    public LocalDate getDate() {
+        return date;
+    }
+    public void setDate(String timeEnd) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.date = LocalDate.parse(timeEnd, formatter);
     }
 
-    public void setTimeBegin(String timeBegin) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        this.timeBegin = LocalDateTime.parse(timeBegin, formatter);
-    }
+    //    public LocalTime getTimeBegin() {
+//        return timeBegin;
+//    }
+//
+//    public void setTimeBegin(String timeBegin) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+//        this.timeBegin = LocalTime.parse(timeBegin, formatter);
+//    }
+//
+//    public LocalTime getTimeEnd() {
+//        return timeEnd;
+//    }
+//
+//    public void setTimeEnd(String timeEnd) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+//        this.timeEnd = LocalTime.parse(timeEnd, formatter);
+//    }
 
-    public LocalDateTime getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(String timeEnd) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        this.timeEnd = LocalDateTime.parse(timeEnd, formatter);
-    }
-
-    public int getIdPlace() {
-        return idPlace;
-    }
-
-    public void setIdPlace(int idPlace) {
-        this.idPlace = idPlace;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 }

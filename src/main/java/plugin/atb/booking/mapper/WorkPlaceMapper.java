@@ -1,10 +1,7 @@
 package plugin.atb.booking.mapper;
 
-import plugin.atb.booking.dto.EmployeeDto;
 import plugin.atb.booking.dto.WorkPlaceDto;
-import plugin.atb.booking.entity.EmployeeEntity;
 import plugin.atb.booking.entity.WorkPlaceEntity;
-import plugin.atb.booking.model.Employee;
 import plugin.atb.booking.model.WorkPlace;
 
 public class WorkPlaceMapper {

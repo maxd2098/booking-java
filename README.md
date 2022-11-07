@@ -25,9 +25,9 @@
 
 Для создания базы и пользователя под нее, нужно выполнить в pgsql следующие запросы:
 ```
-create database invest;
-create user invest with encrypted password 'invest';
-grant all privileges on database invest to invest;
+create database booking;
+create user booking with encrypted password 'booking';
+grant all privileges on database booking to booking;
 ```
 
 Все изменения в структуре базы оформляем через миграции, при старте приложения они автоматически применятся. 

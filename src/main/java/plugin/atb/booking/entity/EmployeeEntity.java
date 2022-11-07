@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Setter
 @Getter
@@ -31,8 +30,9 @@ public class EmployeeEntity {
         this.password = password;
     }
 
-    public EmployeeEntity(Long idEmployee, String name, String password) {
+    public EmployeeEntity(Long idEmployee, String name, String login, String password) {
         this.idEmployee = idEmployee;
+        this.login = login;
         this.name = name;
         this.password = password;
     }

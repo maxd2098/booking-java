@@ -1,9 +1,8 @@
 package plugin.atb.booking.repository;
 
-import plugin.atb.booking.entity.EmployeeEntity;
-import plugin.atb.booking.model.Employee;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import plugin.atb.booking.entity.EmployeeEntity;
 
 import java.util.List;
 
