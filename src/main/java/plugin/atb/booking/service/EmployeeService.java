@@ -48,9 +48,7 @@ public class EmployeeService {
 
     public Employee readEmployeeById(Long idEmployee) {
         try {
-            List<Employee> employees = new ArrayList<>();
-            employeeRepository.findAll()
-                    .forEach(tt -> employees.add(EmployeeMapper.mapEmployeeEntityToEmployee(tt)));
+            List<Employee> employees = new ArrayList<>(employeeRepository.findAll());
             Employee employee = employees.stream()
                     .filter(e -> e.getIdEmployee().equals(idEmployee))
                     .findFirst().orElseThrow(() -> new RuntimeException("Пользователь с id " + idEmployee + " не найден"));;

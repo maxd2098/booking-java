@@ -14,15 +14,6 @@ public class EmployeeMapper {
         );
     }
 
-    public static Employee mapEmployeeEntityToEmployee(Employee employeeEntity) {
-        return new Employee(
-                employeeEntity.getIdEmployee(),
-                employeeEntity.getName(),
-                employeeEntity.getLogin(),
-                employeeEntity.getPassword()
-        );
-    }
-
     public static EmployeeResponseDto mapEmployeeToResponseDto(Employee employee) {
         return new EmployeeResponseDto(
                 employee.getIdEmployee(),
