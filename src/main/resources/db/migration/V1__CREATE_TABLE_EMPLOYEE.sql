@@ -1,6 +1,6 @@
 CREATE TABLE employee
 (
-    id_employee SERIAL PRIMARY KEY,
+    id_employee BIGSERIAL PRIMARY KEY,
     name CHARACTER VARYING(100),
     login CHARACTER VARYING(100),
     password CHARACTER VARYING(30)

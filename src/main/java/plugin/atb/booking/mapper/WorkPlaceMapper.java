@@ -1,7 +1,6 @@
 package plugin.atb.booking.mapper;
 
 import plugin.atb.booking.dto.WorkPlaceDto;
-import plugin.atb.booking.entity.WorkPlaceEntity;
 import plugin.atb.booking.model.WorkPlace;
 
 public class WorkPlaceMapper {
@@ -11,15 +10,6 @@ public class WorkPlaceMapper {
                 workPlaceDto.getNumSeats(),
                 workPlaceDto.getNumLevel(),
                 workPlaceDto.getInfo()
-        );
-    }
-
-    public static WorkPlaceEntity mapWorkPlaceToWorkPlaceEntity(WorkPlace workPlace) {
-        return new WorkPlaceEntity(
-                workPlace.isType(),
-                workPlace.getNumSeats(),
-                workPlace.getNumLevel(),
-                workPlace.getInfo()
         );
     }
 }

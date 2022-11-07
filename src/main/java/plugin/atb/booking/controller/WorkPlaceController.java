@@ -3,7 +3,7 @@ package plugin.atb.booking.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import plugin.atb.booking.dto.WorkPlaceDto;
-import plugin.atb.booking.entity.WorkPlaceEntity;
+import plugin.atb.booking.model.WorkPlace;
 import plugin.atb.booking.service.WorkPlaceService;
 
 @RestController
@@ -18,7 +18,7 @@ public class WorkPlaceController {
     }
 
     @GetMapping("/{idWorkPlace}")
-    public WorkPlaceEntity readWorkPlace(@PathVariable Long idWorkPlace) {
+    public WorkPlace readWorkPlace(@PathVariable Long idWorkPlace) {
         return workPlaceService.readWorkPlace(idWorkPlace);
     }
 

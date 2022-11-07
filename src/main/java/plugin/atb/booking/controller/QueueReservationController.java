@@ -20,15 +20,15 @@ public class QueueReservationController {
         queueReservationService.createQueueReservation(queueReservationDto);
     }
 
-    @GetMapping("/{idEmployee}")
+    @GetMapping("/idEmployee/{idEmployee}")
     public List<QueueReservation> readQueueReservationForEmployee(@PathVariable Long idEmployee) throws Exception {
         return queueReservationService.readQueueReservationByEmployeeId(idEmployee);
     }
 
-//    @GetMapping("/idWorkPlace")
-//    public List<QueueReservation> readQueueReservationForWorkPlace(int idWorkPlace) throws Exception {
-//        return queueReservationService.readQueueReservationForWorkPlace(idWorkPlace);
-//    }
+    @GetMapping("/idWorkPlace/{idWorkPlace}")
+    public List<QueueReservation> readQueueReservationForWorkPlace(@PathVariable Long idWorkPlace) throws Exception {
+        return queueReservationService.readQueueReservationByWorkPlaceId(idWorkPlace);
+    }
 
     @DeleteMapping("/")
     public void deleteQueueReservation(QueueReservationDto queueReservationDto) {
