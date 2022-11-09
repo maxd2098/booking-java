@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plugin.atb.booking.controller.EmployeeController;
+import plugin.atb.booking.controller.WorkPlaceController;
 import plugin.atb.booking.dto.QueueReservationDto;
 import plugin.atb.booking.mapper.EmployeeMapper;
 import plugin.atb.booking.mapper.QueueReservationMapper;
+import plugin.atb.booking.mapper.WorkPlaceMapper;
 import plugin.atb.booking.model.Employee;
 import plugin.atb.booking.model.QueueReservation;
 import plugin.atb.booking.model.WorkPlace;
@@ -28,14 +30,12 @@ public class QueueReservationService {
     private final WorkPlaceService workPlaceService;
     private final QueueReservationRepository queueReservationRepository;
     private final EmployeeController employeeController;
+    private final WorkPlaceController workPlaceController;
 
     public void createQueueReservation(QueueReservationDto queueReservationDto) {
         try {
             Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
-            WorkPlace workPlace = workPlaceService.readWorkPlace(queueReservationDto.getIdWorkPlace());
-            if (workPlace == null) {
-                throw new Exception("Стол с id " + queueReservationDto.getIdWorkPlace() + " не найден");
-            }
+            WorkPlace workPlace = WorkPlaceMapper.mapWorkPlaceDtoToWorkPlace(workPlaceController.readWorkPlace(queueReservationDto.getIdWorkPlace()));
             QueueReservation newQueueReservation = QueueReservationMapper.mapDtoToQueueReservation(queueReservationDto,
                     employee.getIdEmployee(), workPlace.getIdWorkPlace());
             LocalDate date = newQueueReservation.getDate();
@@ -109,7 +109,7 @@ public class QueueReservationService {
             StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
                     .forEach(queueReservations::add);
             Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
-            WorkPlace workPlace = workPlaceService.readWorkPlace(queueReservationDto.getIdWorkPlace());
+            WorkPlace workPlace = WorkPlaceMapper.mapWorkPlaceDtoToWorkPlace(workPlaceController.readWorkPlace(queueReservationDto.getIdWorkPlace()));
             QueueReservation newQueueReservation = QueueReservationMapper.mapDtoToQueueReservation(queueReservationDto,
                     employee.getIdEmployee(), workPlace.getIdWorkPlace());
             LocalDate date = newQueueReservation.getDate();

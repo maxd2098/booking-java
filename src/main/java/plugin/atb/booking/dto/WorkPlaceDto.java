@@ -13,4 +13,11 @@ public class WorkPlaceDto {
 
     public WorkPlaceDto() {
     }
+
+    public WorkPlaceDto(boolean type, int numSeats, int numLevel, String info) {
+        this.type = type;
+        this.numSeats = numSeats;
+        this.numLevel = numLevel;
+        this.info = info;
+    }
 }

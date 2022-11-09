@@ -12,4 +12,13 @@ public class WorkPlaceMapper {
                 workPlaceDto.getInfo()
         );
     }
+
+    public static WorkPlaceDto mapWorkPlaceToWorkPlaceDto(WorkPlace workPlace) {
+        return new WorkPlaceDto(
+                workPlace.isType(),
+                workPlace.getNumSeats(),
+                workPlace.getNumLevel(),
+                workPlace.getInfo()
+        );
+    }
 }
