@@ -20,4 +20,12 @@ public class EmployeeMapper {
                 employee.getName()
         );
     }
+
+    public static Employee mapResponseDtoToEmployee(EmployeeResponseDto employeeResponseDto) {
+        return new Employee(
+                employeeResponseDto.getIdEmployee(),
+                employeeResponseDto.getLogin(),
+                employeeResponseDto.getName()
+        );
+    }
 }

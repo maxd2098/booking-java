@@ -37,6 +37,12 @@ public class Employee {
         this.password = password;
     }
 
+    public Employee(Long idEmployee, String name, String login) {
+        this.idEmployee = idEmployee;
+        this.login = login;
+        this.name = name;
+    }
+
     public Employee(String name, String password) {
         this.name = name;
         this.password = password;

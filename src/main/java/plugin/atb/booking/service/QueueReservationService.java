@@ -3,7 +3,9 @@ package plugin.atb.booking.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import plugin.atb.booking.controller.EmployeeController;
 import plugin.atb.booking.dto.QueueReservationDto;
+import plugin.atb.booking.mapper.EmployeeMapper;
 import plugin.atb.booking.mapper.QueueReservationMapper;
 import plugin.atb.booking.model.Employee;
 import plugin.atb.booking.model.QueueReservation;
@@ -22,21 +24,15 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class QueueReservationService {
-    @Autowired
-    EmployeeService employeeService;
-
-    @Autowired
-    WorkPlaceService workPlaceService;
-
+    private final EmployeeService employeeService;
+    private final WorkPlaceService workPlaceService;
     private final QueueReservationRepository queueReservationRepository;
+    private final EmployeeController employeeController;
 
     public void createQueueReservation(QueueReservationDto queueReservationDto) {
         try {
-            Employee employee = employeeService.readEmployeeById(queueReservationDto.getIdEmployee());
+            Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
             WorkPlace workPlace = workPlaceService.readWorkPlace(queueReservationDto.getIdWorkPlace());
-            if (employee == null) {
-                throw new Exception("Сотрудник с id " + queueReservationDto.getIdEmployee() + " не найден");
-            }
             if (workPlace == null) {
                 throw new Exception("Стол с id " + queueReservationDto.getIdWorkPlace() + " не найден");
             }
@@ -112,7 +108,7 @@ public class QueueReservationService {
             List<QueueReservation> queueReservations = new ArrayList<>();
             StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
                     .forEach(queueReservations::add);
-            Employee employee = employeeService.readEmployeeById(queueReservationDto.getIdEmployee());
+            Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
             WorkPlace workPlace = workPlaceService.readWorkPlace(queueReservationDto.getIdWorkPlace());
             QueueReservation newQueueReservation = QueueReservationMapper.mapDtoToQueueReservation(queueReservationDto,
                     employee.getIdEmployee(), workPlace.getIdWorkPlace());

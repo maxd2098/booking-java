@@ -21,12 +21,12 @@ public class QueueReservationController {
     }
 
     @GetMapping("/idEmployee/{idEmployee}")
-    public List<QueueReservation> readQueueReservationForEmployee(@PathVariable Long idEmployee) throws Exception {
+    public List<QueueReservation> readQueueReservationByEmployeeId(@PathVariable Long idEmployee) throws Exception {
         return queueReservationService.readQueueReservationByEmployeeId(idEmployee);
     }
 
     @GetMapping("/idWorkPlace/{idWorkPlace}")
-    public List<QueueReservation> readQueueReservationForWorkPlace(@PathVariable Long idWorkPlace) throws Exception {
+    public List<QueueReservation> readQueueReservationByWorkPlaceId(@PathVariable Long idWorkPlace) throws Exception {
         return queueReservationService.readQueueReservationByWorkPlaceId(idWorkPlace);
     }
 
