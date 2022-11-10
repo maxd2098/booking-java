@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import plugin.atb.booking.dto.WorkPlaceDto;
+import plugin.atb.booking.dto.WorkPlaceResponseDto;
 import plugin.atb.booking.mapper.WorkPlaceMapper;
 import plugin.atb.booking.model.WorkPlace;
 import plugin.atb.booking.repository.WorkPlaceRepository;
@@ -30,14 +31,14 @@ public class WorkPlaceController {
     }
 
     @GetMapping("/{idWorkPlace}")
-    public WorkPlaceDto readWorkPlace(@PathVariable Long idWorkPlace) {
+    public WorkPlaceResponseDto readWorkPlace(@PathVariable Long idWorkPlace) {
         try {
             WorkPlace workPlace = workPlaceRepository.findAll().stream()
                     .filter(e -> Objects.equals(e.getIdWorkPlace(), idWorkPlace))
                     .findFirst().orElseThrow(() -> new RuntimeException("Рабочее место с номером " + idWorkPlace
                             + " не найдено"));
             System.out.println("Рабочее место с номером " + idWorkPlace + " было получено");
-            return WorkPlaceMapper.mapWorkPlaceToWorkPlaceDto(workPlace);
+            return WorkPlaceMapper.mapWorkPlaceToWorkPlaceResponseDto(workPlace);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;

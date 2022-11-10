@@ -32,100 +32,12 @@ public class QueueReservationService {
     private final EmployeeController employeeController;
     private final WorkPlaceController workPlaceController;
 
-    public void createQueueReservation(QueueReservationDto queueReservationDto) {
-        try {
-            Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
-            WorkPlace workPlace = WorkPlaceMapper.mapWorkPlaceDtoToWorkPlace(workPlaceController.readWorkPlace(queueReservationDto.getIdWorkPlace()));
-            QueueReservation newQueueReservation = QueueReservationMapper.mapDtoToQueueReservation(queueReservationDto,
-                    employee.getIdEmployee(), workPlace.getIdWorkPlace());
-            LocalDate date = newQueueReservation.getDate();
-            LocalTime timeBegin = newQueueReservation.getTimeBegin();
-            LocalTime timeEnd = newQueueReservation.getTimeEnd();
-            boolean adminPermission = newQueueReservation.isAdminPermission();
-            List<QueueReservation> queueReservations = new ArrayList<>();
-            StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
-                    .forEach(queueReservations::add);
-            if (timeBegin.isAfter(timeEnd) || timeBegin.equals(timeEnd)) {
-                throw new Exception("Конечное время больше начального либо равно ему");
-            }
-            boolean checkTime = queueReservations.stream()
-                    .filter(r -> r.getDate().equals(date))
-                    .filter(r -> Objects.equals(r.getIdWorkPlace(), workPlace.getIdWorkPlace()))
-                    .anyMatch(r -> !(timeBegin.isBefore(r.getTimeBegin()) &&
-                            (timeEnd.isBefore(r.getTimeBegin()) || timeEnd.equals(r.getTimeBegin()))
-                            || (timeBegin.isAfter(r.getTimeEnd()) || timeBegin.equals(r.getTimeEnd()))
-                            && timeEnd.isAfter(r.getTimeEnd())));
-            if (checkTime) {
-                throw new Exception("Данное место на указанное время уже забронировано");
-            }
-            boolean checkEmployee = queueReservations.stream()
-                    .filter(r -> r.getDate().equals(date))
-                    .filter(r -> r.getIdEmployee().equals(employee.getIdEmployee()))
-                    .anyMatch(r -> !(timeBegin.isBefore(r.getTimeBegin()) &&
-                            (timeEnd.isBefore(r.getTimeBegin()) || timeEnd.equals(r.getTimeBegin()))
-                            || (timeBegin.isAfter(r.getTimeEnd()) || timeBegin.equals(r.getTimeEnd()))
-                            && timeEnd.isAfter(r.getTimeEnd())));
-            if (checkEmployee) {
-                throw new Exception("Вы уже бронировали себе место на данное время");
-            }
-            queueReservationRepository.save(newQueueReservation);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            System.out.println("Время с " + formatter.format(timeBegin) + " до " + formatter.format(timeEnd) + " на стол " + newQueueReservation.getIdWorkPlace() +
-                    " успешно забронировано");
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void createQueueReservation(QueueReservation queueReservation) {
+        queueReservationRepository.save(queueReservation);
     }
 
-    public List<QueueReservation> readQueueReservationByEmployeeId(Long idEmployee) throws Exception {
-        try {
-            List<QueueReservation> queueReservations = new ArrayList<>();
-            StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
-                    .forEach(queueReservations::add);
-            return queueReservations.stream()
-                    .filter(q -> q.getIdEmployee().equals(idEmployee))
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new Exception("Брони для пользователя с id" + idEmployee + " не найдены");
-        }
-    }
-
-    public List<QueueReservation> readQueueReservationByWorkPlaceId(Long idWorkPlace) throws Exception {
-        try {
-            List<QueueReservation> queueReservations = new ArrayList<>();
-            StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
-                    .forEach(queueReservations::add);
-            return queueReservations.stream()
-                    .filter(q -> q.getIdWorkPlace().equals(idWorkPlace))
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new Exception("Брони на рабочий стол с id" + idWorkPlace + " не найдены");
-        }
-    }
-
-    public void deleteQueueReservation(QueueReservationDto queueReservationDto) {
-        try {
-            List<QueueReservation> queueReservations = new ArrayList<>();
-            StreamSupport.stream(queueReservationRepository.findAll().spliterator(), false)
-                    .forEach(queueReservations::add);
-            Employee employee = EmployeeMapper.mapResponseDtoToEmployee(employeeController.readEmployeeById(queueReservationDto.getIdEmployee()));
-            WorkPlace workPlace = WorkPlaceMapper.mapWorkPlaceDtoToWorkPlace(workPlaceController.readWorkPlace(queueReservationDto.getIdWorkPlace()));
-            QueueReservation newQueueReservation = QueueReservationMapper.mapDtoToQueueReservation(queueReservationDto,
-                    employee.getIdEmployee(), workPlace.getIdWorkPlace());
-            LocalDate date = newQueueReservation.getDate();
-            LocalTime timeBegin = newQueueReservation.getTimeBegin();
-            Long idWorkPlace = newQueueReservation.getIdWorkPlace();
-            QueueReservation checkTimeForDelete = queueReservations.stream()
-                    .filter(wp -> wp.getIdWorkPlace().equals(idWorkPlace)
-                            && wp.getTimeBegin().equals(timeBegin)
-                            && wp.getDate().equals(date))
-                    .findFirst().orElseThrow(() -> new RuntimeException("Бронь на стол " + idWorkPlace +
-                            " на время " + timeBegin + " не найдена"));
-            queueReservationRepository.deleteById(checkTimeForDelete.getIdQueueReservation());
-            System.out.println("Бронь на стол " + idWorkPlace + " на время " + timeBegin + " была удалена");
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void deleteQueueReservation(Long idQueueReservation) {
+        queueReservationRepository.deleteById(idQueueReservation);
     }
 
 }
