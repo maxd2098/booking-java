@@ -1,6 +1,7 @@
 package plugin.atb.booking.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 @Getter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "queue_reservation")
 public class QueueReservation {
     @Id
@@ -20,8 +22,11 @@ public class QueueReservation {
     private Long idQueueReservation;
 
     private LocalDate date;
+
     private LocalTime timeBegin;
+
     private LocalTime timeEnd;
+
     private boolean adminPermission;
 
     @JoinColumn(name="id_employee")
@@ -42,9 +47,5 @@ public class QueueReservation {
         this.adminPermission = adminPermission;
         this.idEmployee = idEmployee;
         this.idWorkPlace = idWorkPlace;
-    }
-
-    public QueueReservation() {
-
     }
 }

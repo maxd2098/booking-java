@@ -1,7 +1,7 @@
 package plugin.atb.booking.exception;
 
 public class NotFoundException extends RuntimeException {
-    public ReadEmployeeException(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
 }

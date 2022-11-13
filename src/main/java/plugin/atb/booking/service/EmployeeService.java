@@ -2,18 +2,10 @@ package plugin.atb.booking.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import plugin.atb.booking.dto.EmployeeDto;
-import plugin.atb.booking.dto.EmployeeResponseDto;
-import plugin.atb.booking.dto.EmployeeUpdateDto;
-import plugin.atb.booking.mapper.EmployeeMapper;
 import plugin.atb.booking.model.Employee;
 import plugin.atb.booking.repository.EmployeeRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-@Service //controller
+@Service
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -22,12 +14,19 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    public void updateEmployeeById(Employee employee) {
+    public Employee readEmployeeByLogin(String login) {
+        return employeeRepository.findEmployeeByLogin(login);
+    }
+
+    public Employee readEmployeeById(Long idEmployee) {
+        return employeeRepository.findByIdEmployee(idEmployee);
+    }
+
+    public void updateEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
 
     public void deleteEmployeeById(Long idEmployee) {
         employeeRepository.deleteById(idEmployee);
     }
-
 }
